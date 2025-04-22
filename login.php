@@ -7,9 +7,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   
 
  
-    $stmt = $conn->prepare("SELECT  password FROM admin WHERE username = :s");
+    $stmt = $conn->prepare("SELECT  password FROM user WHERE username = :s");
 
-   $username = $_POST["username"];
+   
+   $username = htmlspecialchars( $_POST["username"], ENT_QUOTES, 'UTF-8');
    
     $stmt->bindParam("s", $username); //variable username == "remplazar "s", " parametro
 
@@ -21,14 +22,24 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $result = $stmt->fetch(); //fetch ejecuta request completa y regresa resultado
 
     if ($result) {
+       
+        $password = $result['password'];
 
         if (!empty($_POST["password"])) {
             // Hasheamos la contraseña proporcionada por el usuario usando bcrypt
-            $hashed_password = password_hash($_POST["password"], PASSWORD_DEFAULT);
-            $_SESSION["loggedin"] = true;
-            $_SESSION["id"] = true;
-            $_SESSION["username"] = $username;
-            header("location:home.php");
+            $hashed_password = password_verify($_POST["password"],$password);
+            if($hashed_password){
+                $_SESSION["loggedin"] = true;
+                $_SESSION["id"] = true;
+                $_SESSION["username"] = $username;
+                header("location:home.php");
+            }
+            //$hashed_password = password_hash($_POST["password"], PASSWORD_BCRYPT,['cost'=>10]);
+      
+           // $2y$10$59ciyWhnW0Sjm0jWT7CT3eu440fq1AMUh0ZoDgmen0bRiJ3p4NMA2
+           //$2y$10$9OXRBJcR5jElBZQS5VBB6.2BYfDoKtf2A2uYG9vrZ0.7nbH04wb9y
+           // $2a$10$lN2Wrjj28fKyhrMm6t44zurFC613jP9WoiBWNyOKa6nrk78FEuGve
+          
             /*  if (($hashed_password == $result['password'])) { //password encriptado y comparando con password de la base de datos
             $_SESSION["loggedin"] = true;
             $_SESSION["id"] = true;
