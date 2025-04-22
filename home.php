@@ -16,14 +16,15 @@ include "session.php"
 <?php
 include "header.php";
 require_once "conexion.php";
-$stmt = $conn->prepare("Select * from incident ORDER BY Id_employe");
+$idPatient = $_SESSION["idPatient"];
+$stmt = $conn->prepare("Select * from resultat INNER JOIN patient WHERE patient.id_patient = :id");
+
+$stmt->bindParam("id", $idPatient); //variable username == "remplazar "s", " parametro
+$stmt->execute(); // ejecuta bindParam
 
 
-if (!$stmt->execute()) {
-    echo "Error conexion base de datos ";
-}
+$result = $stmt->fetchAll(); //fetch ejecuta request completa y regresa resultado
 
-$result = $stmt->fetch(); //fetch ejecuta request completa y regresa resultado
 /* editar incidente
  *modificar incidente 
  *buscar incidente
@@ -38,13 +39,8 @@ $result = $stmt->fetch(); //fetch ejecuta request completa y regresa resultado
         <table border class = "table" >
 
         <TR>
-    <TH>Id </TH>
-    <TH>Username</TH>
-    <TH>Incident</TH>
-    <TH>Date</TH>
-    <TH>Description</TH>
-    <TH>Status</TH>
-    <TH ><a href='incidents.php'> <button class="button_incidents" type='btn btm succes'> New </button></a> </TH>
+    <TH>id</TH>
+    <TH>idPatient</TH>
 
 
 
@@ -53,34 +49,15 @@ $result = $stmt->fetch(); //fetch ejecuta request completa y regresa resultado
 
 
 <?php
-if (!$stmt->execute()) {
-    echo "Error conexion base de datos ";
-}
-$result = $stmt->fetchAll();
 if (!$result) {
     echo "No existe registro de incidentes";
 } else {
     //print_r($result);
-    for ($i = 0; $i < count($result); $i++) { //primera fila  
-      
+    for ($i = 0; $i < count($result); $i++) { //primera fila
         echo "<TR>";
-        echo "<TD>" . $result[$i]["id"] . "</TD>";
-        echo "<TD>" .  $result[$i]['id_employe'] .  "</TD>";
-        echo "<TD>" . $result[$i]['type'] . "</TD>";
-        echo "<TD>" .  $result[$i]['date'] . "</TD>";
-        echo "<TD>" . $result[$i]['status'] . "</TD>";
-        echo "<TD>" .  $result[$i]['description'] . "</TD>";
-        echo "<td>
-        <form action='updateformulare.php' method='post'>
-        <input type='hidden' name='id' value='" . $result[$i]['id']."'>
-        <button type='submit' name='update_button'>Update</button>
-    </form>
-    <form action='delete.php' method='post'>
-        <input type='hidden' name='id' value='" . $result[$i]['id'] . "'>
-        <button type='submit' name='delete_button'>Delete</button>
-    </form>
-    </td>";
-    echo "</tr>";
+        echo "<TD>" . $result[$i]["id_resultat"] . "</TD>";
+        echo "<TD>" .  $result[$i]['id_patient'] .  "</TD>";
+        echo "</tr>";
    
 
     }
