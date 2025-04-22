@@ -25,6 +25,7 @@ $result = $stmt->fetchAll(); //fetch ejecuta request completa y regresa resultad
 
 <body>
 <div>
+    <a href="logout.php">Logout</a>
     <h2>Bienvenido <?php echo htmlspecialchars($_SESSION["username"]); ?>!</h2>
 
     <table class="table">

@@ -22,9 +22,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 $_SESSION["idPatient"] = $idPatient;
                 $_SESSION["username"] = $username;
                 header("location:home.php");
+                exit;
             }
-        } else {
-            echo "Usuario o contraseña incorrectos.";
         }
     }
+    $_SESSION["error"] = "Usuario o contraseña incorrectos.";
 }
+header("location:index.php");

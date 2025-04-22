@@ -1,3 +1,10 @@
+<?php
+session_start();
+$error = '';
+if (array_key_exists('error', $_SESSION)) {
+    $error = $_SESSION["error"];
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -13,6 +20,7 @@
         <form action="login.php" method="post">
             <ul>
                 <ul>
+                    <div class="error"><?= $error; ?></div>
                     <label for="username">Username:</label>
                     <input type="text" id="username" name="username"/>
                 </ul>

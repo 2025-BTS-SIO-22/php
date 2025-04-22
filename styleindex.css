@@ -6,6 +6,10 @@ body {
     background-image: url(images/background.png);
 }
 
+.error {
+    color: red;
+}
+
 form {
     width: 500px;
     padding-top: 50px;
