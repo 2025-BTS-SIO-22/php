@@ -8,35 +8,25 @@
 </head>
 
 <body>
-  
-  <div class="containerformulaire">
-    <div class= "formulaire">
-<form action="login.php" method="post">
-  <ul>
-    <ul>
-      <label for="username">Username:</label>
-      <input type="text" id="username" name="username" />
-  </ul>
-    <ul>
-      <label for="password">Password:</label>
-      <input type="password" id="password" name="password" />
-</ul>
-    <ul>
-      <label for="submit"></label>
-      <input type="submit" id="submit" name="submit" />
-</ul>
-  </ul>
-</form>
-</div>
+<div class="containerformulaire">
+    <div class="formulaire">
+        <form action="login.php" method="post">
+            <ul>
+                <ul>
+                    <label for="username">Username:</label>
+                    <input type="text" id="username" name="username"/>
+                </ul>
+                <ul>
+                    <label for="password">Password:</label>
+                    <input type="password" id="password" name="password"/>
+                </ul>
+                <ul>
+                    <label for="submit"></label>
+                    <input type="submit" id="submit" name="submit"/>
+                </ul>
+            </ul>
+        </form>
+    </div>
 </div>
 </body>
-
-
-
-
-
-
-
-
-
 </html>

@@ -1,22 +1,19 @@
-body{
-background-color: black;
-background-image: url(images/background.png);
-color: white;
-
-
+body {
+    background-color: black;
+    background-image: url(images/background.png);
+    color: white;
 }
+
 main {
-
     margin: auto 0;
-   
-  
 }
+
 .button_incidents {
     background-color: blueviolet;
     color: white;
 }
+
 .table {
     background-color: rgb(138, 213, 213);
-    color: black; 
-    
+    color: black;
 }

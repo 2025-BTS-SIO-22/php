@@ -7,4 +7,3 @@ session_destroy();
 // Redirige al usuario al formulario de inicio de sesión
 header("location: index.php");
 exit;
-?>
