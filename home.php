@@ -7,14 +7,16 @@ $idPatient = $_SESSION["idPatient"];
 
 $sql = "
     SELECT
-        resultat.id_resultat,
+        result.id_result,
+        result.description,
+        CONCAT(patient.lastname_patient, ' ', patient.name_patient) AS name,
         GROUP_CONCAT(DISTINCT CONCAT(doctor.lastname_doctor, ' ', doctor.name_doctor) SEPARATOR ', ') AS doctors
-    FROM resultat
-    INNER JOIN patient ON resultat.id_patient = patient.id_patient
-    LEFT JOIN resultat_doctor ON resultat.id_resultat = resultat_doctor.id_resultat
-    LEFT JOIN doctor ON resultat_doctor.id_doctor = doctor.id_doctor
-    WHERE patient.id_patient = 2
-    GROUP BY resultat.id_resultat
+    FROM result
+    INNER JOIN patient ON result.id_patient = patient.id_patient
+    LEFT JOIN result_doctor ON result.id_result = result_doctor.id_result
+    LEFT JOIN doctor ON result_doctor.id_doctor = doctor.id_doctor
+    WHERE patient.id_patient = $idPatient
+    GROUP BY result.id_result
 ";
 
 $stmt = $conn->prepare($sql);
@@ -44,7 +46,8 @@ $result = $stmt->fetchAll(); //fetch ejecuta request completa y regresa resultad
     <table class="table">
         <TR>
             <TH>id</TH>
-            <TH>idPatient</TH>
+            <TH>description</TH>
+            <TH>Name</TH>
             <TH>Médecins</TH>
         </TR>
         <?php
@@ -53,8 +56,9 @@ $result = $stmt->fetchAll(); //fetch ejecuta request completa y regresa resultad
         } else {
             for ($i = 0; $i < count($result); $i++) { //primera fila
                 echo "<TR>";
-                echo "<TD>" . $result[$i]["id_resultat"] . "</TD>";
-                echo "<TD>" . $result[$i]['id_patient'] . "</TD>";
+                echo "<TD>" . $result[$i]["id_result"] . "</TD>";
+                echo "<TD>" . $result[$i]['description'] . "</TD>";
+                echo "<TD>" . $result[$i]['name'] . "</TD>";
                 echo "<TD>" . $result[$i]['doctors'] . "</TD>";
                 echo "</tr>";
             }
